@@ -1,0 +1,10 @@
+# 忽略个人的 Agent 和 Github 配置
+.github/
+.vscode/
+
+# 忽略临时文件
+__pycache__/
+*.pyc
+
+# 系统文件
+.DS_Store

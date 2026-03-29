@@ -1,0 +1,17 @@
+# 忽略编译产生的文件和二进制目录
+bin/
+*.exe
+*.out
+*.o
+
+# 忽略输出的大型矩阵验证数据
+A.txt
+B.txt
+C.txt
+
+# 忽略 Python 缓存
+__pycache__/
+*.pyc
+
+# IDE 设置
+.vscode/
