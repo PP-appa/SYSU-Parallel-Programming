@@ -1,40 +1,40 @@
-# 并行程序设计与算法实验
+# Parallel Programming and Algorithms
 
-本仓库为《并行程序设计与算法》课程的实验代码仓库。主要内容围绕矩阵乘法（GEMM）在不同架构和通信模式下的并行化实现与性能优化展开。
+**Author:** Yanwei Lei  
+**Institution:** Sun Yat-sen University (SYSU) - School of Computer Science and Engineering  
+**Academic Year:** 2025/2026
 
-## 项目结构
+This repository hosts a collection of performance-oriented experiments developed for the **Parallel Programming and Algorithms** course. It aims to demonstrate various synchronization methods, parallel programming models, and performance tuning architectures such as Cache optimization on multiprocessor systems. 
 
-仓库包含以下三个阶段的实验内容：
+## Project Structure
 
-### [Lab 0: 矩阵乘法基础与微架构优化](./lab0/)
-聚焦于单机环境下的矩阵乘法基础实现及其常规优化。
-- 分析不同循环顺序（如 i-j-k 与 i-k-j）对缓存（Cache）命中率的影响。
-- 引入循环展开（Loop Unrolling）提升计算效率。
-- 对比调用高性能数学库（Intel MKL）与手写算法的性能差异表现。
+The repository is modularly organized into several academic lab assignments:
 
-### [Lab 1: MPI 点对点通信并行矩阵乘法](./lab1/)
-引入 MPI 并行编程模型，基于典型的 Master-Worker 架构实现分布式矩阵乘法。
-- 使用纯点对点通信接口（`MPI_Send`, `MPI_Recv`）完成矩阵切片的分发与结果收集。
-- 探究在不同进程数与矩阵规模下的并行加速比及通信开销瓶颈。
+### `lab0` - Basic Environment and Cache Optimizations
+Focused on evaluating computational loops by exploiting locality and CPU caching algorithms to boost basic matrix multiplication.
+- Matrix optimization strategies (IKJ vs IJK forms)
+- MKL Math library integration checks
+- Loop Unrolling (`gemm_unroll.cpp`)
 
-### [Lab 2: MPI 集合通信与深度整合优化](./lab2/)
-对 Lab 1 进行深度重构，结合高级 MPI 特性与访存优化。
-- **自定义数据类型**：使用 `MPI_Type_create_struct` 将异质标量（m, n, k）聚合，避免多频次小包通信。
-- **集合通信**：使用 `MPI_Bcast`, `MPI_Scatter`, `MPI_Gather` 替代繁琐的 for 循环点对点收发，依托底层网络拓扑优化最大化传输吞吐量。
-- **深度 Cache 优化**：将局部核心计算更正为 i-p-j 顺序，确保最内层严格遵循一维空间的连续访存，极大降低 Cache Miss，换取数倍的算力提升。
+### `lab1` - Introduction to Distributed Memory (MPI P2P)
+Introduces the MPI framework operating on Message Passing paradigms. Built upon pure Point-to-Point blocking/non-blocking communication paths to evaluate load distribution for array calculations.
 
-## 编译与运行规范
+### `lab2` - MPI Collective Communication
+Replaces primitive P2P messaging with sophisticated Broadcasts (`MPI_Bcast`) and Gather (`MPI_Gather`) pipelines to build a highly robust network scale-out model for processing giant matrices simultaneously over simulated clustered nodes.
 
-每个实验目录 (`lab0`, `lab1`, `lab2`) 下均包含独立的代码源文件 (`src/`) 和编译输出路径 (`bin/`)。
+### `lab3` - Shared Memory Multi-Threading (Pthreads)
+Transitions from network passing to POSIX direct thread bindings operating inside memory limits of a singular physical die. Features implementations analyzing:
+- Block data distribution models (`pthread_gemm.cpp`)
+- Thread-safe Accumulators via local reductions (`pthread_sum.cpp`)
+- An in-depth performance analysis investigating L1 Cache False Sharing penalties compared across standard compiler optimization layers.
 
-**通用编译命令示例 (以 Lab 2 为例):**
-```bash
-mpicxx src/mpi_gemm_v2.cpp -o bin/mpi_gemm_v2 -O3
-```
+## Development Stack
 
-**自动化性能测试:**
-本仓库为每个 Lab 配备了自动化 Python 测试脚本，用于批量化、多维度测量程序在不同规模和进程下的运行时间，并自动格式化输出 Markdown 表格：
-```bash
-python3 run_experiments.py
-```
-*(注：对于 MPI 实验，若测试进程数上限超出了当前宿主机的物理核心数，脚本内部会自动追加 `--oversubscribe` 参数以支持超额订阅执行。)*
+* OS Environment: Linux / Windows Subsystem for Linux (WSL)
+* Compilers: GCC (`g++`)
+* Dependencies: 
+  * OpenMPI (for labs 1 and 2)
+  * Pthreads (for lab 3 OS threading hooks)
+* Recommended Optimizations: `-O3` (unless running architectural experiments like False Sharing simulations)
+
+*Please review each individual `lab{N}/report.md` for granular mathematical proofs, algorithmic workflows, Amdahl's Law implications, and benchmark data tables regarding respective experiments.*
