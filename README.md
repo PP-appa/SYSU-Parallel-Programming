@@ -1,40 +1,39 @@
-# Parallel Programming and Algorithms
+# 并行程序设计与算法
 
-**Author:** Yanwei Lei  
-**Institution:** Sun Yat-sen University (SYSU) - School of Computer Science and Engineering  
-**Academic Year:** 2025/2026
+**机构:** 中山大学 (SYSU) - 计算机学院  
+**学年:** 2025/2026
 
-This repository hosts a collection of performance-oriented experiments developed for the **Parallel Programming and Algorithms** course. It aims to demonstrate various synchronization methods, parallel programming models, and performance tuning architectures such as Cache optimization on multiprocessor systems. 
+本仓库包含了**并行程序设计与算法**课程的系列性能优化实验。旨在演示各种同步方法、并行编程模型，以及在多处理器系统上的缓存（Cache）优化等性能调优架构。
 
-## Project Structure
+## 项目结构
 
-The repository is modularly organized into several academic lab assignments:
+本仓库按学术实验任务进行模块化组织：
 
-### `lab0` - Basic Environment and Cache Optimizations
-Focused on evaluating computational loops by exploiting locality and CPU caching algorithms to boost basic matrix multiplication.
-- Matrix optimization strategies (IKJ vs IJK forms)
-- MKL Math library integration checks
-- Loop Unrolling (`gemm_unroll.cpp`)
+### `lab0` - 基础环境与缓存优化
+重点评估计算循环，通过利用局部性和 CPU 缓存算法来提升基础的矩阵乘法性能。
+- 矩阵优化策略（IKJ vs IJK 形式）
+- MKL 数学库集成测试
+- 循环展开（`gemm_unroll.cpp`）
 
-### `lab1` - Introduction to Distributed Memory (MPI P2P)
-Introduces the MPI framework operating on Message Passing paradigms. Built upon pure Point-to-Point blocking/non-blocking communication paths to evaluate load distribution for array calculations.
+### `lab1` - 分布式内存入门 (MPI P2P)
+介绍基于消息传递范式的 MPI 框架。基于纯粹的点对点（Point-to-Point）阻塞/非阻塞通信路径建立，用于评估数组计算的负载分配。
 
-### `lab2` - MPI Collective Communication
-Replaces primitive P2P messaging with sophisticated Broadcasts (`MPI_Bcast`) and Gather (`MPI_Gather`) pipelines to build a highly robust network scale-out model for processing giant matrices simultaneously over simulated clustered nodes.
+### `lab2` - MPI 集合通信
+用复杂的广播（`MPI_Bcast`）和收集（`MPI_Gather`）流水线取代了原始的 P2P 消息传递，以构建高度稳健的网络扩展模型，在此模拟的集群节点上同时处理巨大的矩阵。
 
-### `lab3` - Shared Memory Multi-Threading (Pthreads)
-Transitions from network passing to POSIX direct thread bindings operating inside memory limits of a singular physical die. Features implementations analyzing:
-- Block data distribution models (`pthread_gemm.cpp`)
-- Thread-safe Accumulators via local reductions (`pthread_sum.cpp`)
-- An in-depth performance analysis investigating L1 Cache False Sharing penalties compared across standard compiler optimization layers.
+### `lab3` - 共享内存多线程 (Pthreads)
+从网络传递过渡到在单个物理芯片的内存限制内运行的 POSIX 直接线程绑定。功能实现及分析如下：
+- 块数据分布模型（`pthread_gemm.cpp`）
+- 通过局部归约实现线程安全的累加器（`pthread_sum.cpp`）
+- 深入的性能分析：对比并调查在标准编译器优化级别下 L1 缓存伪共享（False Sharing）造成的性能惩罚。
 
-## Development Stack
+## 开发技术栈
 
-* OS Environment: Linux / Windows Subsystem for Linux (WSL)
-* Compilers: GCC (`g++`)
-* Dependencies: 
-  * OpenMPI (for labs 1 and 2)
-  * Pthreads (for lab 3 OS threading hooks)
-* Recommended Optimizations: `-O3` (unless running architectural experiments like False Sharing simulations)
+* 操作系统环境: Linux / Windows Subsystem for Linux (WSL)
+* 编译器: GCC (`g++`)
+* 依赖库: 
+  * OpenMPI (用于 lab 1 和 2)
+  * Pthreads (用于 lab 3 系统线程调用)
+* 推荐优化选项: `-O3`（除非运行像模拟伪共享这样的架构实验）
 
-*Please review each individual `lab{N}/report.md` for granular mathematical proofs, algorithmic workflows, Amdahl's Law implications, and benchmark data tables regarding respective experiments.*
+*请查阅每个独立的 `lab{N}/report.md` 以获取关于各自实验的详细推导、算法工作流、阿姆达尔定律（Amdahl's Law）的含义以及基准测试数据表。*
