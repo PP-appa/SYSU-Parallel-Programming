@@ -1,0 +1,5 @@
+HEATED_PLATE_PARALLEL_FOR
+N=128 threads=2 epsilon=0.001
+iterations=4219
+final_diff=0.000999691
+wallclock=0.583687292

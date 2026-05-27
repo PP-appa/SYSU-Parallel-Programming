@@ -1,0 +1,6 @@
+FFT_MPI
+  procs=2 N=8192 nits=10
+  error=2.702253e-16
+  total_time=1.057700e-02 s
+  time_per_call=5.288500e-04 s
+  mflops=1.006864e+03
