@@ -12,7 +12,7 @@
 
 ## 项目概述
 
-本仓库包含课程实验（lab0..lab6）的代码、可执行文件和实验报告（`report.md`）。每个实验目录通常包含：
+本仓库包含课程实验（lab0..lab7）的代码、可执行文件和实验报告（`report.md`）。每个实验目录通常包含：
 
 - 源码（`src/`）
 - 可执行文件（`bin/`，若已构建）
@@ -28,6 +28,7 @@
 - `lab4`：Pthreads 加热板练习
 - `lab5`：自定义 `parallel_for` 与 GEMM 对比
 - `lab6`：Heated Plate（基于 Pthreads 的实现）
+- `lab7`：MPI 并行 FFT 与 `parallel_for` 应用性能分析（含图表、原始日志与 PDF 报告）
 
 有关每个实验的详细说明、参数与结果，请查看对应目录下的 `report.md`。
 
@@ -37,7 +38,9 @@
 
 - 编译器：GCC (`g++`)
 - 线程库：Pthreads
-- 分布式（可选）：OpenMPI（用于 lab1、lab2）
+- 分布式：OpenMPI（用于 lab1、lab2、lab7）
+- 绘图（lab7）：Python3 + matplotlib
+- PDF 生成（lab7，可选）：pandoc / md-to-pdf
 
 常见编译选项示例：
 
@@ -46,7 +49,7 @@
 g++ -std=c++11 -O2 -pthread -o bin/your_program src/your_program.cpp
 ```
 
-## lab6 快速示例
+## lab6/lab7 快速示例
 
 以 `lab6` 为例，复现实验的基本步骤：
 
@@ -60,3 +63,14 @@ make run          # 使用 Makefile 中默认的运行配置
 
 `run_experiments.py`（若存在）可以在不同线程数间自动化运行并保存结果（例如 1/2/4/8）。
 
+
+
+## lab7 快速示例
+
+```bash
+cd lab7
+make
+./scripts/run_all_benchmarks.sh
+```
+
+运行后可在 `lab7/data/` 查看原始日志与汇总 CSV，在 `lab7/figures/` 查看图表结果。
